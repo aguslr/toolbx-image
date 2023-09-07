@@ -1,0 +1,28 @@
+FROM quay.io/toolbx-images/archlinux-toolbox:latest
+
+LABEL com.github.containers.toolbox="true" \
+      usage="This image is meant to be used with the toolbox or distrobox command" \
+      summary="A cloud-native terminal experience" \
+      maintainer="contact@aguslr.com"
+
+COPY extra-packages /
+
+RUN grep -v '^#' /extra-packages | xargs pacman -Sy --noconfirm && \
+    rm /extra-packages
+
+RUN ln -s /bin/sh /usr/bin/sh && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/dconf && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/distrobox && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/espeak-ng && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gnome-session-inhibit && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gsettings && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/nautilus && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/notify-send && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemctl && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemd-inhibit && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/toolbox && \
+    ln -sf /usr/lib/flatpak-xdg-utils/xdg-email /usr/local/bin/xdg-email && \
+    ln -sf /usr/lib/flatpak-xdg-utils/xdg-open /usr/local/bin/xdg-open

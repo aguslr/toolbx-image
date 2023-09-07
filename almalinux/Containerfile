@@ -1,0 +1,31 @@
+FROM quay.io/toolbx-images/almalinux-toolbox:latest
+
+LABEL com.github.containers.toolbox="true" \
+      usage="This image is meant to be used with the toolbox or distrobox command" \
+      summary="A cloud-native terminal experience" \
+      maintainer="contact@aguslr.com"
+
+COPY extra-packages /
+
+RUN dnf -y install --nogpgcheck \
+    https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm \
+    https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm && \
+    grep -v '^#' /extra-packages | xargs dnf -y install --setopt=install_weak_deps=False && \
+    rm /extra-packages
+
+RUN \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/dconf && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/distrobox && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/espeak-ng && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gnome-session-inhibit && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gsettings && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/nautilus && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/notify-send && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemctl && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemd-inhibit && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/toolbox && \
+    ln -sf /usr/bin/flatpak-xdg-email /usr/local/bin/xdg-email && \
+    ln -sf /usr/bin/flatpak-xdg-open /usr/local/bin/xdg-open
