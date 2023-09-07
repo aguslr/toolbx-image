@@ -1,0 +1,163 @@
+name: Build image
+
+on:
+  schedule:
+    - cron: '20 20 * * *'  # 8:20pm everyday
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'README*'
+      - '*.md'
+      - '*.txt'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README*'
+      - '*.md'
+      - '*.txt'
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: ${{ github.event.repository.name }}
+  REGISTRY_URL: ghcr.io
+  REGISTRY_USERNAME: ${{ github.repository_owner }}
+  REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - 'fedora'
+          - 'almalinux'
+          - 'alpine'
+          - 'archlinux'
+          - 'debian'
+          - 'opensuse'
+          - 'rhel'
+          - 'ubuntu'
+        include:
+          - distro: 'fedora'
+            is_latest: true
+          - distro: 'almalinux'
+            is_latest: false
+          - distro: 'alpine'
+            is_latest: false
+          - distro: 'archlinux'
+            is_latest: false
+          - distro: 'debian'
+            is_latest: false
+          - distro: 'opensuse'
+            is_latest: false
+          - distro: 'rhel'
+            is_latest: false
+          - distro: 'ubuntu'
+            is_latest: false
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log into registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY_URL }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+
+      - name: Extract Docker metadata
+        if: |
+          github.event_name != 'pull_request' && matrix.distro != ''
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          tags: |
+            type=raw,value=${{ matrix.distro }}
+
+      - name: Extract Docker latest tag
+        if: |
+          github.event_name != 'pull_request' && matrix.is_latest == true
+        id: meta_latest
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          tags: |
+            type=raw,value=latest
+
+      - name: Extract Docker PR tag
+        if: github.event_name == 'pull_request'
+        id: meta_pr
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          tags: |
+            type=ref,suffix=-${{ matrix.distro }},event=pr
+
+      - name: Extract Docker date tag
+        if: github.event_name == 'schedule'
+        id: meta_date
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          tags: |
+            type=schedule,prefix=${{ matrix.distro }}-,pattern={{date 'YYYYMMDD'}}
+
+      - name: Build Image
+        id: build_image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          context: ${{ matrix.distro }}
+          containerfiles: |
+            ./${{ matrix.distro }}/Containerfile
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ steps.meta_latest.outputs.tags }}
+            ${{ steps.meta_pr.outputs.tags }}
+            ${{ steps.meta_date.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          oci: true
+
+      - name: Push to container registries
+        uses: redhat-actions/push-to-registry@v2
+        id: push
+        with:
+          tags: ${{ steps.build_image.outputs.tags }}
+          extra-args: |
+            --disable-content-trust
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v2
+
+      - name: Sign container image
+        run: |
+          cosign sign --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}@${TAGS}
+        env:
+          TAGS: ${{ steps.push.outputs.digest }}
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_KEY }}
+          COSIGN_EXPERIMENTAL: false
+
+      - name: Echo outputs
+        run: |
+          echo "${{ toJSON(steps.push.outputs) }}"
