@@ -6,15 +6,15 @@
 Usage
 -----
 
-If you use Distrobox:
-
-    distrobox create -i ghcr.io/aguslr/toolbx-image:latest -n distrobox
-    distrobox enter distrobox
-
-If you use Toolbx:
+If you use [Toolbx][5]:
 
     toolbox -i ghcr.io/aguslr/toolbx-image:latest -c toolbox
     toolbox enter toolbox
+
+If you use [Distrobox][6]:
+
+    distrobox create -i ghcr.io/aguslr/toolbx-image:latest -n distrobox
+    distrobox enter distrobox
 
 
 ### Tags
@@ -70,3 +70,5 @@ References
 [2]: https://github.com/ublue-os/boxkit
 [3]: https://github.com/toolbx-images/images
 [4]: https://docs.sigstore.dev/cosign/overview/
+[5]: https://github.com/containers/toolbox
+[6]: https://github.com/89luca89/distrobox
