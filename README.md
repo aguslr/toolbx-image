@@ -59,6 +59,7 @@ following command:
 References
 ----------
 
+- [Declaring your own personal distroboxes][7]
 - [GitHub - ublue-os/boxkit: A blingier starting image for Toolbx and
   Distrobox.][2]
 - [GitHub - toolbx-images/images: Community maintained container images to use
@@ -72,3 +73,4 @@ References
 [4]: https://docs.sigstore.dev/cosign/overview/
 [5]: https://github.com/containers/toolbox
 [6]: https://github.com/89luca89/distrobox
+[7]: https://www.ypsidanger.com/declaring-your-own-personal-distroboxes/
