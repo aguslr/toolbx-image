@@ -10,7 +10,7 @@ COPY extra-packages /
 RUN grep -v '^#' /extra-packages | xargs pacman -Sy --noconfirm && \
     rm /extra-packages
 
-RUN ln -s /bin/sh /usr/bin/sh && \
+RUN \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/dconf && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/distrobox && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/espeak-ng && \
