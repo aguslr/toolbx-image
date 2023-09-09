@@ -51,7 +51,6 @@ qemu-system-hppa
 qemu-system-ppc
 qemu-system-sparc
 qemu-system-x86
-ruby-bundler
 screen
 shellcheck
 squashfs-tools
