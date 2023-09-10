@@ -76,8 +76,32 @@ jobs:
 
       - name: Extract Docker metadata
         if: |
-          github.event_name != 'pull_request' && matrix.distro != ''
+          github.event_name != 'pull_request'
         id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          labels: |
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository }}/main/README.md
+
+      - name: Extract Docker latest metadata
+        if: |
+          github.event_name != 'pull_request' && matrix.is_latest == true
+        id: meta_latest
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=auto
+
+      - name: Extract Docker distro metadata
+        if: |
+          github.event_name != 'pull_request' && matrix.distro != ''
+        id: meta_distro
         uses: docker/metadata-action@v4
         with:
           images: |
@@ -87,20 +111,7 @@ jobs:
           tags: |
             type=raw,value=${{ matrix.distro }}
 
-      - name: Extract Docker latest tag
-        if: |
-          github.event_name != 'pull_request' && matrix.is_latest == true
-        id: meta_latest
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
-          flavor: |
-            latest=false
-          tags: |
-            type=raw,value=latest
-
-      - name: Extract Docker PR tag
+      - name: Extract Docker PR metadata
         if: github.event_name == 'pull_request'
         id: meta_pr
         uses: docker/metadata-action@v4
@@ -132,7 +143,7 @@ jobs:
           containerfiles: |
             ./${{ matrix.distro }}/Containerfile
           tags: |
-            ${{ steps.meta.outputs.tags }}
+            ${{ steps.meta_distro.outputs.tags }}
             ${{ steps.meta_latest.outputs.tags }}
             ${{ steps.meta_pr.outputs.tags }}
             ${{ steps.meta_date.outputs.tags }}
