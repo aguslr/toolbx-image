@@ -148,7 +148,7 @@ jobs:
             ${{ steps.meta_pr.outputs.tags }}
             ${{ steps.meta_date.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          oci: true
+          oci: false
 
       - name: Push to container registries
         uses: redhat-actions/push-to-registry@v2
