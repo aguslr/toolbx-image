@@ -96,7 +96,9 @@ jobs:
           images: |
             ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
           flavor: |
-            latest=auto
+            latest=false
+          tags: |
+            type=raw,value=latest
 
       - name: Extract Docker distro metadata
         if: |
@@ -112,7 +114,8 @@ jobs:
             type=raw,value=${{ matrix.distro }}
 
       - name: Extract Docker PR metadata
-        if: github.event_name == 'pull_request'
+        if: |
+          github.event_name == 'pull_request' && matrix.distro != ''
         id: meta_pr
         uses: docker/metadata-action@v4
         with:
@@ -124,7 +127,8 @@ jobs:
             type=ref,suffix=-${{ matrix.distro }},event=pr
 
       - name: Extract Docker date tag
-        if: github.event_name == 'schedule'
+        if: |
+          github.event_name == 'schedule' && matrix.distro != ''
         id: meta_date
         uses: docker/metadata-action@v4
         with:
