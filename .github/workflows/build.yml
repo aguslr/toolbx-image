@@ -43,6 +43,7 @@ jobs:
           - 'debian'
           - 'opensuse'
           - 'rhel'
+          - 'rockylinux'
           - 'ubuntu'
         include:
           - distro: 'fedora'
@@ -58,6 +59,8 @@ jobs:
           - distro: 'opensuse'
             is_latest: false
           - distro: 'rhel'
+            is_latest: false
+          - distro: 'rockylinux'
             is_latest: false
           - distro: 'ubuntu'
             is_latest: false

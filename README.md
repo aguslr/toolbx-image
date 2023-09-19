@@ -42,6 +42,9 @@ There are several flavors for this container:
 - `rhel`: Uses RHEL's latest image from
   <https://quay.io/organization/toolbx-images>.
 
+- `rockylinux`: Uses Rocky Linux's latest image from
+  <https://quay.io/organization/toolbx-images>.
+
 - `ubuntu`: Uses Ubuntu's latest image from
   <https://quay.io/organization/toolbx-images>.
 
