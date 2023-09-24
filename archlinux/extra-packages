@@ -51,6 +51,7 @@ qemu-system-hppa
 qemu-system-ppc
 qemu-system-sparc
 qemu-system-x86
+qrencode
 screen
 shellcheck
 squashfs-tools

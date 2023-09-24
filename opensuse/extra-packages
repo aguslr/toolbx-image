@@ -48,6 +48,7 @@ qemu-extra
 qemu-img
 qemu-ppc
 qemu-x86
+qrencode
 ruby-devel
 ruby3.2-rubygem-bundler
 screen

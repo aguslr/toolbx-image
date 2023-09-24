@@ -57,6 +57,7 @@ qemu-system-hppa
 qemu-system-ppc
 qemu-system-sparc
 qemu-system-x86
+qrencode
 ruby-devel
 rubygem-bundler
 screen
