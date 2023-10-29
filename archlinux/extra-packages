@@ -21,6 +21,7 @@ gcc
 git
 gnupg
 heimdall
+htop
 imagemagick
 inetutils
 irssi
@@ -33,6 +34,7 @@ make
 mc
 mediainfo
 mutt
+neofetch
 newsboat
 nmap
 openbsd-netcat

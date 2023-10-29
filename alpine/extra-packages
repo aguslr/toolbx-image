@@ -14,6 +14,7 @@ fzf
 gcc
 git
 gnupg
+htop
 irssi
 isync
 jq
@@ -23,6 +24,7 @@ make
 mc
 mediainfo
 mutt
+neofetch
 newsboat
 nmap
 pandoc

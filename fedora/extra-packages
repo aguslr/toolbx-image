@@ -28,6 +28,7 @@ git
 glibc-langpack-en
 gnupg
 heimdall
+htop
 irssi
 isync
 jq
@@ -39,6 +40,7 @@ make
 mc
 mediainfo
 mutt
+neofetch
 netcat
 newsboat
 nmap

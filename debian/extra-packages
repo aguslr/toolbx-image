@@ -24,6 +24,7 @@ gcc
 git
 gnupg
 heimdall-flash
+htop
 imagemagick
 inetutils-telnet
 iputils-ping
@@ -39,6 +40,7 @@ make
 mc
 mediainfo
 mutt
+neofetch
 netcat-openbsd
 netcat-openbsd
 newsboat
