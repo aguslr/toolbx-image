@@ -66,3 +66,8 @@ weechat
 wget
 wl-clipboard
 yt-dlp
+zathura
+zathura-plugin-cb
+zathura-plugin-djvu
+zathura-plugin-pdf-poppler
+zathura-plugin-ps
