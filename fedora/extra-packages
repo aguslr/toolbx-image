@@ -39,6 +39,7 @@ lz4
 make
 mc
 mediainfo
+mpv
 mutt
 neofetch
 netcat
