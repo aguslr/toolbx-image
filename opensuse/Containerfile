@@ -17,6 +17,7 @@ RUN \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gnome-session-inhibit && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gsettings && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/journalctl && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/nautilus && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/notify-send && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
