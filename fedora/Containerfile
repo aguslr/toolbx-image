@@ -16,6 +16,8 @@ RUN dnf -y install \
 RUN \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/dconf && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/distrobox && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker-compose && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/espeak-ng && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gnome-session-inhibit && \
@@ -25,6 +27,7 @@ RUN \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/notify-send && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/ostree && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman-compose && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemctl && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemd-inhibit && \
