@@ -1,51 +1,50 @@
 [toolbx-image][1]
 =================
 
-[![build-image](https://github.com/aguslr/toolbx-image/actions/workflows/build.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/build.yml)
 
 Usage
 -----
 
 If you use [Toolbx][5]:
 
-    toolbox -i ghcr.io/aguslr/toolbx-image:latest -c toolbox
+    toolbox -i ghcr.io/aguslr/toolbx-fedora:latest -c toolbox
     toolbox enter toolbox
 
 If you use [Distrobox][6]:
 
-    distrobox create -i ghcr.io/aguslr/toolbx-image:latest -n distrobox
+    distrobox create -i ghcr.io/aguslr/toolbx-fedora:latest -n distrobox
     distrobox enter distrobox
 
 
 ### Tags
 
-There are several flavors for this container:
+There are several images available in this repository:
 
-- `fedora`, `latest`: Uses Fedora's latest image from
+- `toolbx-fedora`: Uses Fedora's latest image from
   <https://registry.fedoraproject.org/>.
 
-- `almalinux`: Uses Alma Linux's latest image from
+- `toolbx-almalinux`: Uses Alma Linux's latest image from
   <https://quay.io/organization/toolbx-images>.
 
-- `alpine`: Uses Alpine's latest image from
+- `toolbx-alpine`: Uses Alpine's latest image from
   <https://quay.io/organization/toolbx-images>.
 
-- `archlinux`: Uses Arch Linux's latest image from
+- `toolbx-archlinux`: Uses Arch Linux's latest image from
   <https://quay.io/organization/toolbx-images>.
 
-- `debian`: Uses Debian's latest image from
+- `toolbx-debian`: Uses Debian's latest image from
   <https://quay.io/organization/toolbx-images>.
 
-- `opensuse`: Uses openSUSE's latest image from
+- `toolbx-opensuse`: Uses openSUSE's latest image from
   <https://quay.io/organization/toolbx-images>.
 
-- `rhel`: Uses RHEL's latest image from
+- `toolbx-rhel`: Uses RHEL's latest image from
   <https://quay.io/organization/toolbx-images>.
 
-- `rockylinux`: Uses Rocky Linux's latest image from
+- `toolbx-rockylinux`: Uses Rocky Linux's latest image from
   <https://quay.io/organization/toolbx-images>.
 
-- `ubuntu`: Uses Ubuntu's latest image from
+- `toolbx-ubuntu`: Uses Ubuntu's latest image from
   <https://quay.io/organization/toolbx-images>.
 
 
@@ -56,7 +55,7 @@ These images are signed with Sisgstore's [Cosign][4]. You can verify the
 signature by downloading the `cosign.pub` key from this repo and running the
 following command:
 
-    cosign verify --key cosign.pub ghcr.io/aguslr/toolbx-image:latest
+    cosign verify --key cosign.pub ghcr.io/aguslr/toolbx-fedora:latest
 
 
 References

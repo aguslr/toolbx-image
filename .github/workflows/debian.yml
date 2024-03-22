@@ -1,4 +1,4 @@
-name: Build image
+name: Build Debian images
 
 on:
   schedule:
@@ -6,21 +6,20 @@ on:
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - 'README*'
-      - '*.md'
-      - '*.txt'
+    paths:
+      - debian/**
+      - .github/workflows/debian.yml
   push:
     branches:
       - main
-    paths-ignore:
-      - 'README*'
-      - '*.md'
-      - '*.txt'
+    paths:
+      - debian/**
+      - .github/workflows/debian.yml
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ${{ github.event.repository.name }}
+  DISTRO: 'debian'
+  IMAGE_NAME: 'toolbx-debian'
   REGISTRY_URL: ghcr.io
   REGISTRY_USERNAME: ${{ github.repository_owner }}
   REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
@@ -35,34 +34,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        distro:
-          - 'fedora'
-          - 'almalinux'
-          - 'alpine'
-          - 'archlinux'
-          - 'debian'
-          - 'opensuse'
-          - 'rhel'
-          - 'rockylinux'
-          - 'ubuntu'
+        major_version: [12, 'unstable']
         include:
-          - distro: 'fedora'
+          - major_version: 12
             is_latest: true
-          - distro: 'almalinux'
-            is_latest: false
-          - distro: 'alpine'
-            is_latest: false
-          - distro: 'archlinux'
-            is_latest: false
-          - distro: 'debian'
-            is_latest: false
-          - distro: 'opensuse'
-            is_latest: false
-          - distro: 'rhel'
-            is_latest: false
-          - distro: 'rockylinux'
-            is_latest: false
-          - distro: 'ubuntu'
+          - major_version: 'unstable'
             is_latest: false
 
     steps:
@@ -78,8 +54,6 @@ jobs:
           password: ${{ env.REGISTRY_PASSWORD }}
 
       - name: Extract Docker metadata
-        if: |
-          github.event_name != 'pull_request'
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -87,10 +61,48 @@ jobs:
             ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
           flavor: |
             latest=false
-          labels: |
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository }}/main/README.md
+          tags: |
+            type=semver,pattern={{version}}
+            type=sha,prefix=sha256-
 
-      - name: Extract Docker latest metadata
+      - name: Extract Docker PR tag
+        if: github.event_name == 'pull_request'
+        id: meta_pr
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          tags: |
+            type=ref,suffix=-${{ matrix.major_version }},event=pr
+
+      - name: Extract Docker date tag
+        if: github.event_name == 'schedule'
+        id: meta_date
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          tags: |
+            type=schedule,prefix=${{ matrix.major_version }}-,pattern={{date 'YYYYMMDD'}}
+
+      - name: Extract Docker major version tag
+        if: |
+          github.event_name != 'pull_request' && matrix.major_version != ''
+        id: meta_version
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
+          tags: |
+            type=raw,value=${{ matrix.major_version }}
+
+      - name: Extract Docker latest tag
         if: |
           github.event_name != 'pull_request' && matrix.is_latest == true
         id: meta_latest
@@ -103,58 +115,23 @@ jobs:
           tags: |
             type=raw,value=latest
 
-      - name: Extract Docker distro metadata
-        if: |
-          github.event_name != 'pull_request' && matrix.distro != ''
-        id: meta_distro
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
-          flavor: |
-            latest=false
-          tags: |
-            type=raw,value=${{ matrix.distro }}
-
-      - name: Extract Docker PR metadata
-        if: |
-          github.event_name == 'pull_request' && matrix.distro != ''
-        id: meta_pr
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
-          flavor: |
-            latest=false
-          tags: |
-            type=ref,suffix=-${{ matrix.distro }},event=pr
-
-      - name: Extract Docker date tag
-        if: |
-          github.event_name == 'schedule' && matrix.distro != ''
-        id: meta_date
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}
-          flavor: |
-            latest=false
-          tags: |
-            type=schedule,prefix=${{ matrix.distro }}-,pattern={{date 'YYYYMMDD'}}
-
       - name: Build Image
         id: build_image
         uses: redhat-actions/buildah-build@v2
         with:
-          context: ${{ matrix.distro }}
+          context: |
+            ./${{ env.DISTRO }}
           containerfiles: |
-            ./${{ matrix.distro }}/Containerfile
+            ./${{ env.DISTRO }}/Containerfile
           tags: |
-            ${{ steps.meta_distro.outputs.tags }}
-            ${{ steps.meta_latest.outputs.tags }}
+            ${{ steps.meta.outputs.tags }}
             ${{ steps.meta_pr.outputs.tags }}
             ${{ steps.meta_date.outputs.tags }}
+            ${{ steps.meta_version.outputs.tags }}
+            ${{ steps.meta_latest.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            MAJOR_VERSION=${{ matrix.major_version }}
           oci: false
 
       - name: Push to container registries
@@ -166,11 +143,11 @@ jobs:
             --disable-content-trust
 
       - name: Install Cosign
-        uses: sigstore/cosign-installer@v2
+        uses: sigstore/cosign-installer@v3.1.2
 
       - name: Sign container image
         run: |
-          cosign sign --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}@${TAGS}
+          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY_URL }}/${{ env.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}@${TAGS}
         env:
           TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_KEY }}

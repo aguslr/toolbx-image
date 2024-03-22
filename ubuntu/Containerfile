@@ -1,4 +1,6 @@
-FROM quay.io/toolbx-images/ubuntu-toolbox:latest
+ARG MAJOR_VERSION=22.04
+
+FROM quay.io/toolbx-images/ubuntu-toolbox:${MAJOR_VERSION}
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
