@@ -1,6 +1,6 @@
 ARG MAJOR_VERSION=latest
 
-FROM quay.io/toolbx-images/archlinux-toolbox:${MAJOR_VERSION}
+FROM quay.io/toolbx/arch-toolbox:${MAJOR_VERSION}
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
