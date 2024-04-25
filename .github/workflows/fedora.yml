@@ -37,9 +37,9 @@ jobs:
         major_version: [39, 40]
         include:
           - major_version: 39
-            is_latest: true
-          - major_version: 40
             is_latest: false
+          - major_version: 40
+            is_latest: true
 
     steps:
 
