@@ -30,6 +30,7 @@ RUN \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemctl && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemd-inhibit && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/timedatectl && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/toolbox && \
     ln -sf /usr/bin/flatpak-xdg-email /usr/local/bin/xdg-email && \
     ln -sf /usr/bin/flatpak-xdg-open /usr/local/bin/xdg-open

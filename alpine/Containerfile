@@ -30,4 +30,5 @@ RUN ln -s /bin/sh /usr/bin/sh && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemctl && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemd-inhibit && \
+    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/timedatectl && \
     ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/toolbox
