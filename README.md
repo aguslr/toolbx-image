@@ -20,9 +20,6 @@ If you use [Distrobox][6]:
 
 There are several images available in this repository:
 
-- `toolbx-fedora`: Uses Fedora's latest image from
-  <https://registry.fedoraproject.org/>.
-
 - `toolbx-almalinux`: Uses Alma Linux's latest image from
   <https://quay.io/organization/toolbx-images>.
 
@@ -34,6 +31,9 @@ There are several images available in this repository:
 
 - `toolbx-debian`: Uses Debian's latest image from
   <https://quay.io/organization/toolbx-images>.
+
+- `toolbx-fedora`: Uses Fedora's latest image from
+  <https://registry.fedoraproject.org/>.
 
 - `toolbx-opensuse`: Uses openSUSE's latest image from
   <https://quay.io/organization/toolbx-images>.
