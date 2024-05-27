@@ -38,7 +38,7 @@ There are several images available in this repository:
   <https://quay.io/organization/toolbx-images>.
 
 - `toolbx-archlinux`: Uses Arch Linux's latest image from
-  <https://quay.io/organization/toolbx-images>.
+  <https://quay.io/organization/toolbx>.
 
 - `toolbx-debian`: Uses Debian's latest image from
   <https://quay.io/organization/toolbx-images>.
@@ -56,7 +56,7 @@ There are several images available in this repository:
   <https://quay.io/organization/toolbx-images>.
 
 - `toolbx-ubuntu`: Uses Ubuntu's latest image from
-  <https://quay.io/organization/toolbx-images>.
+  <https://quay.io/organization/toolbx>.
 
 
 Verification
