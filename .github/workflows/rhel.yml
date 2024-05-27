@@ -1,4 +1,4 @@
-name: Build RHEL images
+name: RHEL
 
 on:
   schedule:

@@ -1,4 +1,4 @@
-name: Build ArchLinux images
+name: ArchLinux
 
 on:
   schedule:

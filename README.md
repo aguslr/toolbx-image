@@ -2,6 +2,17 @@
 =================
 
 
+[![almalinux](https://github.com/aguslr/toolbx-image/actions/workflows/almalinux.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/almalinux.yml)<br/>
+[![alpine](https://github.com/aguslr/toolbx-image/actions/workflows/alpine.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/alpine.yml)<br/>
+[![archlinux](https://github.com/aguslr/toolbx-image/actions/workflows/archlinux.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/archlinux.yml)<br/>
+[![debian](https://github.com/aguslr/toolbx-image/actions/workflows/debian.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/debian.yml)<br/>
+[![fedora](https://github.com/aguslr/toolbx-image/actions/workflows/fedora.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/fedora.yml)<br/>
+[![opensuse](https://github.com/aguslr/toolbx-image/actions/workflows/opensuse.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/opensuse.yml)<br/>
+[![rhel](https://github.com/aguslr/toolbx-image/actions/workflows/rhel.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/rhel.yml)<br/>
+[![rockylinux](https://github.com/aguslr/toolbx-image/actions/workflows/rockylinux.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/rockylinux.yml)<br/>
+[![ubuntu](https://github.com/aguslr/toolbx-image/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/aguslr/toolbx-image/actions/workflows/ubuntu.yml)<br/>
+
+
 Usage
 -----
 
@@ -20,7 +31,7 @@ If you use [Distrobox][6]:
 
 There are several images available in this repository:
 
-- `toolbx-almalinux`: Uses Alma Linux's latest image from
+- `toolbx-almalinux`: Uses AlmaLinux's latest image from
   <https://quay.io/organization/toolbx-images>.
 
 - `toolbx-alpine`: Uses Alpine's latest image from

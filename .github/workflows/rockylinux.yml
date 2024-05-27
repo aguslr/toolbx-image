@@ -1,4 +1,4 @@
-name: Build Rocky Linux images
+name: Rocky Linux
 
 on:
   schedule:

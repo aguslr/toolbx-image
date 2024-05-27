@@ -1,4 +1,4 @@
-name: Build AlmaLinux images
+name: AlmaLinux
 
 on:
   schedule:

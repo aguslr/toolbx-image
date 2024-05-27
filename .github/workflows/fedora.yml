@@ -1,4 +1,4 @@
-name: Build Fedora images
+name: Fedora
 
 on:
   schedule:
