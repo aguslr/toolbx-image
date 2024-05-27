@@ -9,31 +9,36 @@ LABEL com.github.containers.toolbox="true" \
 
 COPY extra-packages /
 
-RUN dnf -y install \
-    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
-    grep -v '^#' /extra-packages | xargs dnf -y install --setopt=install_weak_deps=False && \
-    rm /extra-packages
+RUN <<-'EOT' sh
+	set -eu
 
-RUN \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/dconf && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/distrobox && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker-compose && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/espeak-ng && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gnome-session-inhibit && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gsettings && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/journalctl && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/nautilus && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/notify-send && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/ostree && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman-compose && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemctl && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemd-inhibit && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/timedatectl && \
-    ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/toolbox && \
-    ln -sf /usr/bin/flatpak-xdg-email /usr/local/bin/xdg-email && \
-    ln -sf /usr/bin/flatpak-xdg-open /usr/local/bin/xdg-open
+	dnf -y install \
+		https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+		https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+	grep -v '^#' /extra-packages | \
+		xargs dnf -y install --setopt=install_weak_deps=False
+	rm /extra-packages
+
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/dconf
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/distrobox
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/docker-compose
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/espeak-ng
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/flatpak
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gnome-session-inhibit
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/gsettings
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/journalctl
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/nautilus
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/notify-send
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/ostree
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman-compose
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemctl
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/systemd-inhibit
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/timedatectl
+	ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/toolbox
+	ln -sf /usr/bin/flatpak-xdg-email /usr/local/bin/xdg-email
+	ln -sf /usr/bin/flatpak-xdg-open /usr/local/bin/xdg-open
+EOT
