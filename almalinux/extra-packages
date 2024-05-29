@@ -3,6 +3,7 @@ bash-completion
 bind-utils
 ca-certificates
 colordiff
+expect
 file
 flatpak-spawn
 g++
@@ -14,6 +15,8 @@ jq
 libsecret
 lz4
 make
+netcat
+nmap
 openssh-clients
 p7zip-plugins
 pandoc
