@@ -16,12 +16,10 @@ git
 gnupg
 iputils
 jq
-libsecret-tools
 lynx
 lz4
 make
 netcat-openbsd
-nmap
 openssh-clients
 p7zip
 pandoc
