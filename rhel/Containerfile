@@ -1,6 +1,6 @@
-ARG MAJOR_VERSION=latest
+ARG MAJOR_VERSION=9
 
-FROM quay.io/toolbx-images/rhel-toolbox:${MAJOR_VERSION}
+FROM registry.access.redhat.com/ubi${MAJOR_VERSION}/toolbox
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
@@ -11,6 +11,9 @@ COPY extra-packages /
 
 RUN <<-'EOT' sh
 	set -eu
+
+	dnf -y install \
+		https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
 
 	dnf -y install --nogpgcheck \
 		https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm \

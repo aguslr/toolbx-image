@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        major_version: ['latest']
+        major_version: ['9']
         platform:
           - linux/amd64
           - linux/arm64
@@ -123,9 +123,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        major_version: ['latest']
+        major_version: ['9']
         include:
-          - major_version: 'latest'
+          - major_version: '9'
             is_latest: true
 
     steps:
