@@ -50,7 +50,7 @@ There are several images available in this repository:
   <https://quay.io/organization/toolbx-images>.
 
 - `toolbx-rhel`: Uses RHEL's latest image from
-  <https://quay.io/organization/toolbx-images>.
+  <https://registry.access.redhat.com>.
 
 - `toolbx-rockylinux`: Uses Rocky Linux's latest image from
   <https://quay.io/organization/toolbx-images>.
