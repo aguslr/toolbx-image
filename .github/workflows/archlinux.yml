@@ -82,7 +82,7 @@ jobs:
           file: |
             ./${{ env.DISTRO }}/Containerfile
           build-args: |
-            FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
+            MAJOR_VERSION=${{ matrix.major_version }}
           platforms: ${{ matrix.platform }}
           provenance: false
           push: true
