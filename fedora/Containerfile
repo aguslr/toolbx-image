@@ -1,6 +1,6 @@
 ARG MAJOR_VERSION=latest
 
-FROM registry.fedoraproject.org/fedora-toolbox:${MAJOR_VERSION}
+FROM quay.io/fedora/fedora-toolbox:${MAJOR_VERSION}
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \

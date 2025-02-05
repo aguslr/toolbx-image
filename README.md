@@ -44,7 +44,7 @@ There are several images available in this repository:
   <https://quay.io/organization/toolbx-images>.
 
 - `toolbx-fedora`: Uses Fedora's latest image from
-  <https://registry.fedoraproject.org/>.
+  <https://quay.io/repository/fedora/fedora-toolbox>.
 
 - `toolbx-opensuse`: Uses openSUSE's latest image from
   <https://quay.io/organization/toolbx-images>.
